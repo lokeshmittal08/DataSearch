@@ -1,0 +1,11 @@
+document_loader.py – Load & extract text from PDF, DOCX, TXT
+
+embed_and_store.py – Split into chunks, generate embeddings, store in FAISS with metadata
+
+vector_store.py – Save/load FAISS index
+
+llm.py – Set up local LLM via llama-cpp-python
+
+rag_engine.py – Embed query → retrieve top-k chunks → generate answer using context
+
+main.py – Interactive CLI to run RAG
