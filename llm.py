@@ -1,7 +1,9 @@
 from llama_cpp import Llama
 #from config import LLM_MODEL_PATH
+import os
 
-LLM_MODEL_PATH="/app/model/mistral-7b-instruct-v0.1.Q4_K_M.gguf"
+LLM_MODEL_PATH = os.getenv("LLM_MODEL_PATH")
+
 llm = Llama(model_path=LLM_MODEL_PATH, n_ctx=2048)
 
 def generate_answer(context: str, question: str) -> str:

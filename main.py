@@ -1,4 +1,10 @@
+
+from dotenv import load_dotenv, find_dotenv
+load_dotenv()
+
 from rag_engine import ask_question
+
+
 
 if __name__ == "__main__":
     print("Inside main")

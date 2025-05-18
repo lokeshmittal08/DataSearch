@@ -1,0 +1,10 @@
+{
+    "name": "My Dev Container",
+    "dockerFile": "Dockerfile",
+    "mounts": [
+        "source=${localWorkspaceFolder},target=/app,type=bind"
+    ],
+    "runArgs": [
+        "--network=host"
+    ]
+}

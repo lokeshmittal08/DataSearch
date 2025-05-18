@@ -1,0 +1,7 @@
+Update docker to set python path, needed for import
+export PYTHONPATH="/path/to/your/module:$PYTHONPATH"
+
+apt install libfreexl1
+
+
+ln -s /usr/lib/x86_64-linux-gnu/libproj.so.19.2.1 /usr/lib/x86_64-linux-gnu/libproj.so.0
