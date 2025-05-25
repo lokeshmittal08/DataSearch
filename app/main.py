@@ -2,9 +2,20 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from app.embed_store import build_or_update_index
 from app.retrieve import ask_question
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
 
+app = FastAPI(    title="DPR-Based Document Search API",
+    description="Ingest documents and ask questions using Dense Passage Retrieval.",
+    version="1.0.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class IngestRequest(BaseModel):
     filename: str
     text: str

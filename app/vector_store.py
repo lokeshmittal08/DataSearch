@@ -3,6 +3,7 @@ import pickle
 from app.config import FAISS_INDEX_PATH
 
 def save_faiss_index(index, metadata):
+    print("inside the save_faiss_index")
     FAISS_INDEX_PATH.mkdir(parents=True, exist_ok=True)
     faiss.write_index(index, str(FAISS_INDEX_PATH / "index.faiss"))
     with open(FAISS_INDEX_PATH / "metadata.pkl", "wb") as f:

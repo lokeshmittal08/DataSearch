@@ -1,5 +1,7 @@
-fastapi
+fastapi[all]
 uvicorn[standard]
-sentence-transformers
 faiss-cpu
 langchain
+scikit-learn
+transformers
+torch
