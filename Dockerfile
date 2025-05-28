@@ -5,15 +5,22 @@ FROM python:3.9-bullseye
 WORKDIR /app
 
 # Install OS dependencies
-# RUN apt-get update && apt-get install -y \
-#     git \
-#     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    openjdk-11-jre-headless \
+    curl \
+    maven \
+    unzip \
+    jq 
+
+ENV OPENAPI_GENERATOR_VERSION=7.13.0
+RUN openapi-generator-cli version
+RUN rm -rf /var/lib/apt/lists/*
 
 # Install Python packages
 # RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy app files
-COPY ./src /src
+COPY ./ /app
 
 RUN mkdir -p /app/data/faiss_index
 # Expose FastAPI port
