@@ -1,13 +1,13 @@
-<<<<<<< HEAD
 faiss-cpu
 sentence-transformers
 llama-cpp-python
 textract
 langchain
-=======
 fastapi
+fastapi[all]
 uvicorn[standard]
-sentence-transformers
 faiss-cpu
 langchain
->>>>>>> 1c86414 (Embedding services for ingest and retrievel)
+scikit-learn
+transformers
+torch
