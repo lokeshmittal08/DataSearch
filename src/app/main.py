@@ -4,10 +4,14 @@ from app.embed_store import build_or_update_index
 from app.retrieve import ask_question
 from fastapi.middleware.cors import CORSMiddleware
 
+app = FastAPI( 
+    title="My API",
+    description="API for doing awesome things",
+    version="1.0.0",
+    docs_url="/swagger",
+    redoc_url=None
+)
 
-app = FastAPI(    title="DPR-Based Document Search API",
-    description="Ingest documents and ask questions using Dense Passage Retrieval.",
-    version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
