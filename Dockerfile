@@ -1,24 +1,26 @@
-# Use a base image that has Python and system dependencies installed
+# Use official Python image
 FROM python:3.9-bullseye
 
-# Install build tools and dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
-    libopenblas-dev \
-    libomp-dev \
-    libffi-dev \
-    && apt-get clean
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the code into the container
-COPY . /app
-
-# Set the working directory
+# Set work directory
 WORKDIR /app
 
-# Run the application
-CMD ["python", "main.py"]
+# Install OS dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python packages
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy app files
+COPY app/ ./app
+
+RUN mkdir -p /app/data/faiss_index
+# Expose FastAPI port
+EXPOSE 8000
+
+# Run the app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
