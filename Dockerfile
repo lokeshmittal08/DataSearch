@@ -1,26 +1,14 @@
 # Use official Python image
 FROM python:3.9-bullseye
 
-# Set work directory
 WORKDIR /app
 
-# Install OS dependencies
-RUN apt-get update && apt-get install -y \
-    openjdk-11-jre-headless \
-    curl \
-    maven \
-    unzip \
-    jq 
-
-ENV OPENAPI_GENERATOR_VERSION=7.13.0
-RUN openapi-generator-cli version
-RUN rm -rf /var/lib/apt/lists/*
-
-# Install Python packages
-# RUN pip install --upgrade pip && pip install -r requirements.txt
-
-# Copy app files
+ENV PYTHONPATH="/app"
 COPY ./ /app
+
+# RUN apt-get update && apt-get install -y && rm -rf /var/lib/apt/lists/*
+
+RUN chmod +x freeze.sh && chmod +x start.sh && pip install --upgrade pip && pip install -r requirements.txt
 
 RUN mkdir -p /app/data/faiss_index
 # Expose FastAPI port
