@@ -7,6 +7,9 @@ WORKDIR /app
 # Install OS dependencies
 RUN apt-get update && apt-get install -y \
     git \
+    poppler-utils \
+    tesseract-ocr \
+    libgl1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements
@@ -19,6 +22,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY app/ ./app
 
 RUN mkdir -p /app/data/faiss_index
+RUN mkdir -p /app/data/uploads
 # Expose FastAPI port
 EXPOSE 8000
 

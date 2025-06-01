@@ -5,3 +5,9 @@ langchain
 scikit-learn
 transformers
 torch
+pdf2image
+pytesseract
+pydantic
+python-multipart
+pdfplumber==0.10.2
+docling==2.34.0
