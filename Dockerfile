@@ -1,20 +1,30 @@
 # Use official Python image
 FROM python:3.9-bullseye
 
+# Set work directory
 WORKDIR /app
 
-ENV PYTHONPATH="/app"
-COPY ./ /app
+# Install OS dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    poppler-utils \
+    tesseract-ocr \
+    libgl1 \
+    && rm -rf /var/lib/apt/lists/*
 
-# RUN apt-get update && apt-get install -y && rm -rf /var/lib/apt/lists/*
+# Copy requirements
+COPY requirements.txt .
 
-RUN chmod +x freeze.sh && chmod +x start.sh && pip install --upgrade pip && pip install -r requirements.txt
+# Install Python packages
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copy app files
+COPY app/ ./app
 
 RUN mkdir -p /app/data/faiss_index
+RUN mkdir -p /app/data/uploads
 # Expose FastAPI port
 EXPOSE 8000
 
 # Run the app
-
-CMD ["sleep", "infinity"]
-# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
