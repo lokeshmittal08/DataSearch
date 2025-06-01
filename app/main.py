@@ -1,19 +1,13 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from pydantic import BaseModel
 from app.embed_store import build_or_update_index
 from app.retrieve import ask_question
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi import FastAPI, File, UploadFile,Form
+from app.pdf_utils import extract_text_from_pdf  # You'll create this
 
-app = FastAPI( 
-    title="My API",
-    description="API for doing awesome things",
-    version="1.0.0",
-    docs_url="/swagger",
-    redoc_url=None
-)
-
+app = FastAPI(    title="DPR-Based Document Search API",
+    description="Ingest documents and ask questions using Dense Passage Retrieval.",
+    version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,33 +17,44 @@ app.add_middleware(
     allow_headers=["*"],
 )
 class IngestRequest(BaseModel):
-    path: str
-    file: UploadFile
+    filename: str
+    text: str
 
 class QueryRequest(BaseModel):
-    query: str
-    page_size: int = 5
+    question: str
+    top_k: int = 5
 
 @app.post("/ingest")
-def ingest(
-    file: UploadFile = File(...),
-    path: str = Form(...)):
-    return JSONResponse({
-        "doc_id": "doc-id-created"
-    })
-
+async def ingest_pdf(
+    #request: IngestRequest
+    filename: str = Form(...),
+    pdf_file: UploadFile = File(...),
+    ):
     try:
-        num_chunks = build_or_update_index(request.filename, request.text)
-        return {"message": f"✅ {num_chunks} chunks stored for {request.filename}"}
+        # Save the file to disk
+        file_location = f"/app/data/uploads/{filename}"
+        with open(file_location, "wb") as f:
+            f.write(await pdf_file.read())
+
+        # Extract text
+        text = extract_text_from_pdf(file_location)
+        if not text:
+            raise HTTPException(status_code=500, detail="Text extraction failed.")
+
+        # Call existing function
+        num_chunks = build_or_update_index(filename, text)
+        return {"message": f"✅ {num_chunks} chunks stored for {filename}"}
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ingestion failed: {str(e)}")
+    # try:
+    #     num_chunks = build_or_update_index(request.filename, request.text)
+    #     return {"message": f"✅ {num_chunks} chunks stored for {request.filename}"}
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Ingestion failed: {str(e)}")
 
 @app.post("/query")
 def query(request: QueryRequest):
-    return JSONResponse([{
-        "doc_id": "doc-id-found",
-        "path": "example/path/to/document.txt",
-    }])
     try:
         print(f"Received question: {request.question} | top_k: {request.top_k}")
         result = ask_question(request.question, request.top_k)
