@@ -5,6 +5,8 @@ import pdfplumber
 from pdf2image import convert_from_path
 import pytesseract
 
+from libs.cache import cache
+
 def extract_with_docling(pdf_path):
 
     try:
@@ -51,10 +53,10 @@ def extract_with_ocr(pdf_path):
         print(f"[OCR] Failed: {e}")
         return None
 
-def extract_text_from_pdf(pdf_path):
+@cache.memoize()  # Cache results to avoid reprocessing the same file
+def extract_text_from_pdf(pdf_path) -> str:
     for extractor in [extract_with_docling, extract_with_pdfplumber, extract_with_ocr]:
         text = extractor(pdf_path)
         if text:
             return text
-    print("[ERROR] All extraction methods failed.")
-    return None
+    raise ValueError("Failed to extract text from PDF using all methods.")

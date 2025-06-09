@@ -1,13 +1,16 @@
 
+from math import sin
 from typing import Optional
 import requests
 import os
 import mimetypes
 
+from singleton_decorator import singleton
+
+@singleton
 class Client:
     def __init__(self, url="http://localhost:8000"):
         self.url = url
-    
         
     def _file_path_dict(self, files: dict) -> dict:
         created_dict = {}
@@ -26,10 +29,10 @@ class Client:
 
     def post(self, endpoint: str, data: dict):
         response = requests.post(f"{self.url}/{endpoint}", json=data)
-        return response.json()
+        return response
     
     # post with files and json
     def post_files(self, endpoint: str, files: dict, data: Optional[dict] = None):
         file_dict = self._file_path_dict(files)
         response = requests.post(f"{self.url}/{endpoint}", files=file_dict, data=data)
-        return response.json()
+        return response
