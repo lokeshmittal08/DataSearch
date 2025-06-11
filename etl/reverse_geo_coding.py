@@ -5,17 +5,16 @@ import os
 
 import pandas as pd
 
-from utils.dd import dd 
 
 load_dotenv()
 
 base_dir = os.getenv('BASE_DIR')
 
 
-cities_df = pd.read_csv(f'{base_dir}/source_data/geonames-all-cities-with-a-population-1000.csv',delimiter=';')
+cities_df = pd.read_csv(f'/app/etl/geonames-all-cities-with-a-population-1000.csv',delimiter=';')
 # dd(cities_df.head())
 
-conn = sqlite3.connect(f"{base_dir}/data_transformers/geo_names.db")
+conn = sqlite3.connect(f"/app/data/geo_names.db")
 cur = conn.cursor()
 
 # Create table
