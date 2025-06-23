@@ -15,28 +15,23 @@ cases = {
     "somebody who know how to manage customer database and information" : ["34131484.pdf"] ,
     "experience in sales of cable TV and internet services" : ["34131484.pdf"],
     "High School Diploma or equivalent" : ["34131484.pdf"],
-    
     "expert in culinary arts" : ["30311202.pdf"],
     "must know how to sanitize kitchen and food preparation areas" : ["30311202.pdf"],
     "must know how to operate fryers, grills, ovens, and other kitchen equipment" : ["30311202.pdf"],
-
     "knowledge of wireless networks, lan wan, and internet protocols" : ["engineer.pdf"],
     "microsoft certified" : ["engineer.pdf"],
     "PC mac deployment and support" : ["engineer.pdf"],
-    
     "engineering management" : ["37335325.pdf"],
     "phone application development" : ["37335325.pdf"],
     "android ios development" : ["37335325.pdf"],
     "working knowledge of SCRUM and AGILE methodology" : ["37335325.pdf"],
-    
-    
     "experience in teaching assitant" : ["70892619.pdf"],
     
        
-    "table" : ["70892619.pdf"],
-    "uae" : ["70892619.pdf"],
-    "gulf country" : ["70892619.pdf"],
-    "red" : ["70892619.pdf"],
+    "table" : ["location-image.jpg"],
+    "uae" : ["location-image.jpg"],
+    "gulf country" : ["location-image.jpg"],
+    "red" : ["location-image.jpg"],
     
 }
 

@@ -9,3 +9,5 @@ QUERY_ENCODER_NAME = "facebook/dpr-question_encoder-single-nq-base"
 PASSAGE_ENCODER_NAME = "facebook/dpr-ctx_encoder-single-nq-base"
 TEMP_STORAGE = "/tmp"
 SIMILARITY_THRESHOLD = 0.7
+MIN_SIMILARITY_SCORE = 0.7
+OVERFETCH_FACTOR = 3
