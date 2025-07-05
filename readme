@@ -386,7 +386,7 @@ chromadb: Vector store for embeddings.
 transformers: DPR models for embedding generation.
 ultralytics: YOLO for image object detection.
 docling, pdfplumber, pytesseract: PDF text extraction.
-click: CLI framework.
+
 
 Contributing
 Contributions are welcome! Please:
